@@ -7,7 +7,7 @@
 
     "C++": "#include<iostream> \\n using namespace std; \\n int main(){ \\n \\t cout<<\"Collab IDE\"; \\n }\\n",
 
-    "Dart": "main() {\\n\\tprint(\"Collab IDE\");\\n }\\n",
+    "Dart": "void main() {\\n\\tprint(\"Collab IDE\");\\n }\\n",
 
     "Rust": "fn main() {{\\n\\tprintln!(\"Collab IDE\")\\n}}\\n",
 
