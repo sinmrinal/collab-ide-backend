@@ -10,9 +10,12 @@ def _createFiles(suffix: str):
     return inputfd, inputname, codefd, codename, outputfd, outputname
 
 
-def Python(code: str, inputString: str = "", ):
+def Python(code: str, inputString: str):
 
-    inputfd, inputname, codefd, codename, outputfd, outputname = _createFiles('.py')
+    # inputfd, inputname, codefd, codename, outputfd, outputname = _createFiles('.py')
+    inputfd, inputname = tempfile.mkstemp(dir='./api/temp')
+    codefd, codename = tempfile.mkstemp(dir='./api/temp', suffix='.py')
+    outputfd, outputname = tempfile.mkstemp(dir='./api/temp')
 
     try:
         with os.fdopen(inputfd, 'w+') as fh:
@@ -20,7 +23,7 @@ def Python(code: str, inputString: str = "", ):
         with os.fdopen(codefd, 'w+') as fh:
             fh.write(code)
 
-        command = f'cat {inputname} | python3 {codename} >& {outputname}'
+        command = f'cat {inputname} | python3 {codename} > {outputname} 2>&1'
         subprocess.run(command, stdout=subprocess.PIPE, shell=True)
 
         with os.fdopen(outputfd, 'r+') as fh:
@@ -28,7 +31,7 @@ def Python(code: str, inputString: str = "", ):
 
     except Exception as e:
         output = ""
-        print(e)
+        print(e.__class__)
 
     finally:
         os.remove(inputname)
@@ -37,7 +40,7 @@ def Python(code: str, inputString: str = "", ):
         return output
 
 
-def Java(code: str, inputString: str = ""):
+def Java(code: str, inputString: str):
 
     inputfd, inputname, codefd, codename, outputfd, outputname = _createFiles('.java')
 
@@ -47,14 +50,14 @@ def Java(code: str, inputString: str = ""):
         with os.fdopen(codefd, 'w+') as fh:
             fh.write(code)
 
-        command = f'cat {inputname} | javac {codename} >& {outputname}'
+        command = f'cat {inputname} | javac {codename} > {outputname} 2>&1'
         subprocess.run(command, shell=True)
 
         with os.fdopen(outputfd, 'r+') as fh:
             output = fh.read()
 
         if len(output) == 0:
-            command = f'cat {inputname} | java {codename[:-5]} >& {outputname}'
+            command = f'cat {inputname} | java {codename[:-5]} > {outputname} 2>&1'
             subprocess.run(command, shell=True)
             with os.fdopen(outputfd, 'r+') as fh:
                 output = fh.read()
@@ -70,7 +73,7 @@ def Java(code: str, inputString: str = ""):
         return output
 
 
-def Cpp(code: str, inputString: str = ""):
+def Cpp(code: str, inputString: str):
 
     inputfd, inputname, codefd, codename, outputfd, outputname = _createFiles('.cpp')
 
@@ -80,7 +83,7 @@ def Cpp(code: str, inputString: str = ""):
         with os.fdopen(codefd, 'w+') as fh:
             fh.write(code)
 
-        command = f'cat {inputname} | make {codename} >& {outputname}'
+        command = f'cat {inputname} | make {codename} > {outputname} 2>&1'
         subprocess.run(command, shell=True)
 
         with os.fdopen(outputfd, 'r+') as fh:
@@ -89,7 +92,7 @@ def Cpp(code: str, inputString: str = ""):
         if len(output) > 28:
             output = output[27:]
         else:
-            command = f'cat {inputname} | {codename[:-4]} >& {outputname}'
+            command = f'cat {inputname} | {codename[:-4]} > {outputname} 2>&1'
             subprocess.run(command, shell=True)
             with os.fdopen(outputfd, 'r+') as fh:
                 output = fh.read()
@@ -105,7 +108,7 @@ def Cpp(code: str, inputString: str = ""):
         return output
 
 
-def C(code: str, inputString: str = ""):
+def C(code: str, inputString: str):
 
     inputfd, inputname, codefd, codename, outputfd, outputname = _createFiles('.c')
 
@@ -115,7 +118,7 @@ def C(code: str, inputString: str = ""):
         with os.fdopen(codefd, 'w+') as fh:
             fh.write(code)
 
-        command = f'cat {inputname} | make {codename} >& {outputname}'
+        command = f'cat {inputname} | make {codename} > {outputname} 2>&1'
         subprocess.run(command, shell=True)
 
         with os.fdopen(outputfd, 'r+') as fh:
@@ -124,7 +127,7 @@ def C(code: str, inputString: str = ""):
         if len(output) > 20:
             output = output[20:]
         else:
-            command = f'cat {inputname} | {codename[:-2]} >& {outputname}'
+            command = f'cat {inputname} | {codename[:-2]} > {outputname} 2>&1'
             subprocess.run(command, shell=True)
             with os.fdopen(outputfd, 'r+') as fh:
                 output = fh.read()
@@ -139,7 +142,7 @@ def C(code: str, inputString: str = ""):
         os.remove(outputname)
         return output
 
-def Dart(code: str, inputString: str = "", ):
+def Dart(code: str, inputString: str):
 
     inputfd, inputname, codefd, codename, outputfd, outputname = _createFiles('.dart')
 
@@ -149,7 +152,7 @@ def Dart(code: str, inputString: str = "", ):
         with os.fdopen(codefd, 'w+') as fh:
             fh.write(code)
 
-        command = f'cat {inputname} | dart {codename} >& {outputname}'
+        command = f'cat {inputname} | dart {codename} > {outputname} 2>&1'
         subprocess.run(command, stdout=subprocess.PIPE, shell=True)
 
         with os.fdopen(outputfd, 'r+') as fh:
@@ -165,7 +168,7 @@ def Dart(code: str, inputString: str = "", ):
         os.remove(outputname)
         return output
 
-def Golang(code: str, inputString: str = "", ):
+def Golang(code: str, inputString: str):
 
     inputfd, inputname, codefd, codename, outputfd, outputname = _createFiles('.go')
 
@@ -175,7 +178,7 @@ def Golang(code: str, inputString: str = "", ):
         with os.fdopen(codefd, 'w+') as fh:
             fh.write(code)
 
-        command = f'cat {inputname} | go run {codename} >& {outputname}'
+        command = f'cat {inputname} | go run {codename} > {outputname} 2>&1'
         subprocess.run(command, stdout=subprocess.PIPE, shell=True)
 
         with os.fdopen(outputfd, 'r+') as fh:
