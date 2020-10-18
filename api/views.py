@@ -10,7 +10,7 @@ from . import run
 def boilerPlate(request):
     '''
     Returns Boilerplate Code for requested language.
-    Expected to recieve language requet in format: {Language: Language Name}.
+    Expected to recieve language request in format: {Language: Language Name}.
     '''
 
     try:
@@ -33,6 +33,8 @@ def boilerPlate(request):
 @api_view(['POST'])
 def compile(request):
     '''
+    Expects a language, input and code to run.
+    Responds with Output of the code.
     '''
     try:
         data = request.data
@@ -41,7 +43,7 @@ def compile(request):
             output = run.Python(code=data['code'], inputString=data['input'])
         elif data['language'] == 'Java':
             output = run.Java(code=data['code'], inputString=data['input'])
-        elif data['language'] == 'Cpp':
+        elif data['language'] == 'C++':
             output = run.Cpp(code=data['code'], inputString=data['input'])
         elif data['language'] == 'C':
             output = run.C(code=data['code'], inputString=data['input'])
