@@ -12,7 +12,6 @@ def boilerPlate(request):
     Returns Boilerplate Code for requested language.
     Expected to recieve language request in format: {Language: Language Name}.
     '''
-
     try:
         with open('./api/boilerPlate.json') as file:
             boilerPlateCode = json.load(file)
