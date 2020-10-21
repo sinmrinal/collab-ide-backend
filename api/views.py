@@ -35,22 +35,22 @@ def compile(request):
     Expects a language, input and code to run.
     Responds with Output of the code.
     '''
-    try:
-        data = request.data
-
-        if data['language'] == 'Python':
-            output = run.Python(code=data['code'], inputString=data['input'])
-        elif data['language'] == 'Java':
-            output = run.Java(code=data['code'], inputString=data['input'])
-        elif data['language'] == 'C++':
-            output = run.Cpp(code=data['code'], inputString=data['input'])
-        elif data['language'] == 'C':
-            output = run.C(code=data['code'], inputString=data['input'])
-        elif data['language'] == 'Dart':
-            output = run.Dart(code=data['code'], inputString=data['input'])
-        elif data['language'] == 'Golang':
-            output = run.Golang(code=data['code'], inputString=data['input'])
-    except Exception as e:
-        output = e
-    finally:
-        return Response(status=status.HTTP_200_OK, data={'output': output})
+    if 'language' not in request.data:
+        output = 'Select a language!'
+    else:
+        if request.data['language'] == 'Python':
+            output = run.Python(code=request.data['code'], inputString=request.data['input'])
+        elif request.data['language'] == 'Java':
+            output = run.Java(code=request.data['code'], inputString=request.data['input'])
+        elif request.data['language'] == 'C++':
+            output = run.Cpp(code=request.data['code'], inputString=request.data['input'])
+        elif request.data['language'] == 'C':
+            output = run.C(code=request.data['code'], inputString=request.data['input'])
+        elif request.data['language'] == 'Dart':
+            output = run.Dart(code=request.data['code'], inputString=request.data['input'])
+        elif request.data['language'] == 'Golang':
+            output = run.Golang(code=request.data['code'], inputString=request.data['input'])
+        else:
+            output = request.data
+    
+    return Response(status=status.HTTP_200_OK, data={'output': output})
