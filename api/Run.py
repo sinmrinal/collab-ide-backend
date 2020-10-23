@@ -3,19 +3,16 @@ import subprocess
 import tempfile
 
 
-def _createFiles(suffix: str):
+def _createFiles(suffix: str) -> tuple:
     inputfd, inputname = tempfile.mkstemp(dir='./api/temp')
     codefd, codename = tempfile.mkstemp(dir='./api/temp', suffix=suffix)
     outputfd, outputname = tempfile.mkstemp(dir='./api/temp')
     return inputfd, inputname, codefd, codename, outputfd, outputname
 
 
-def Python(code: str, inputString: str):
+def Python(code: str, inputString: str) -> str:
 
-    # inputfd, inputname, codefd, codename, outputfd, outputname = _createFiles('.py')
-    inputfd, inputname = tempfile.mkstemp(dir='./api/temp')
-    codefd, codename = tempfile.mkstemp(dir='./api/temp', suffix='.py')
-    outputfd, outputname = tempfile.mkstemp(dir='./api/temp')
+    inputfd, inputname, codefd, codename, outputfd, outputname = _createFiles('.py')
 
     try:
         with os.fdopen(inputfd, 'w+') as fh:
@@ -30,8 +27,7 @@ def Python(code: str, inputString: str):
             output = fh.read()
 
     except Exception as e:
-        output = ""
-        print(e.__class__)
+        output = e.__class__
 
     finally:
         os.remove(inputname)
@@ -40,7 +36,7 @@ def Python(code: str, inputString: str):
         return output
 
 
-def Java(code: str, inputString: str):
+def Java(code: str, inputString: str) -> str:
 
     inputfd, inputname, codefd, codename, outputfd, outputname = _createFiles('.java')
 
@@ -50,21 +46,14 @@ def Java(code: str, inputString: str):
         with os.fdopen(codefd, 'w+') as fh:
             fh.write(code)
 
-        command = f'cat {inputname} | javac {codename} > {outputname} 2>&1'
-        subprocess.run(command, shell=True)
-
+        command = f'cat {inputname} | java {codename} > {outputname} 2>&1'
+        subprocess.run(command, stdout=subprocess.PIPE, shell=True)
+        
         with os.fdopen(outputfd, 'r+') as fh:
             output = fh.read()
 
-        if len(output) == 0:
-            command = f'cat {inputname} | java {codename[:-5]} > {outputname} 2>&1'
-            subprocess.run(command, shell=True)
-            with os.fdopen(outputfd, 'r+') as fh:
-                output = fh.read()
-
     except Exception as e:
-        output = ""
-        print(e)
+        output = e.__class__
 
     finally:
         os.remove(inputname)
@@ -73,7 +62,7 @@ def Java(code: str, inputString: str):
         return output
 
 
-def Cpp(code: str, inputString: str):
+def Cpp(code: str, inputString: str) -> str:
 
     inputfd, inputname, codefd, codename, outputfd, outputname = _createFiles('.cpp')
 
@@ -82,9 +71,9 @@ def Cpp(code: str, inputString: str):
             fh.write(inputString)
         with os.fdopen(codefd, 'w+') as fh:
             fh.write(code)
-
-        command = f'cat {inputname} | make {codename} > {outputname} 2>&1'
-        subprocess.run(command, shell=True)
+        
+        command = f'g++ {codename} > {outputname} 2>&1'
+        subprocess.run(command, stdout=subprocess.PIPE, shell=True)
 
         with os.fdopen(outputfd, 'r+') as fh:
             output = fh.read()
@@ -92,19 +81,19 @@ def Cpp(code: str, inputString: str):
         if len(output) > 28:
             output = output[27:]
         else:
-            command = f'cat {inputname} | {codename[:-4]} > {outputname} 2>&1'
-            subprocess.run(command, shell=True)
-            with os.fdopen(outputfd, 'r+') as fh:
+            command = f'./a.out < {inputname} > {codename} 2>&1'
+            subprocess.run(command, stdout=subprocess.PIPE, shell=True)
+            with open(outputname, 'r+') as fh:
                 output = fh.read()
 
     except Exception as e:
-        output = ""
-        print(e)
+        output = e.__class__
 
     finally:
         os.remove(inputname)
         os.remove(codename)
         os.remove(outputname)
+        os.remove('./a.out')
         return output
 
 
@@ -118,8 +107,8 @@ def C(code: str, inputString: str):
         with os.fdopen(codefd, 'w+') as fh:
             fh.write(code)
 
-        command = f'cat {inputname} | make {codename} > {outputname} 2>&1'
-        subprocess.run(command, shell=True)
+        command = f'gcc {codename} > {outputname}'
+        subprocess.run(command, stdout=subprocess.PIPE, shell=True)
 
         with os.fdopen(outputfd, 'r+') as fh:
             output = fh.read()
@@ -127,19 +116,19 @@ def C(code: str, inputString: str):
         if len(output) > 20:
             output = output[20:]
         else:
-            command = f'cat {inputname} | {codename[:-2]} > {outputname} 2>&1'
-            subprocess.run(command, shell=True)
-            with os.fdopen(outputfd, 'r+') as fh:
+            command = f'./a.out < {inputname} > {outputname} 2>&1'
+            subprocess.run(command, stdout=subprocess.PIPE, shell=True)
+            with open(outputname, 'r+') as fh:
                 output = fh.read()
 
     except Exception as e:
-        output = ""
-        print(e)
+        output = e.__class__
 
     finally:
         os.remove(inputname)
         os.remove(codename)
         os.remove(outputname)
+        os.remove('./a.out')
         return output
 
 def Dart(code: str, inputString: str):

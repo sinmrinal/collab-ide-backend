@@ -1,7 +1,7 @@
 {
     "Python": "print(\"Collab IDE\")\n",
 
-    "Java": "public class Java1{\n public static void main(String[] args){\n \tSystem.out.println(\"Collab IDE\");\n\t}\n}\n",
+    "Java": "public class Java{\n public static void main(String[] args){\n \tSystem.out.println(\"Collab IDE\");\n\t}\n}\n",
 
     "C": "#include<stdio.h> \n int main(){ \n \t printf(\"Collab IDE\"); \n }\n",
 
