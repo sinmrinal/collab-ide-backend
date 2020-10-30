@@ -15,6 +15,7 @@
   <a href="#local-development">Local Development</a> •
   <a href="#features">Features</a> •
   <a href="#language-support">Language Support</a> •
+  <a href="#api-documentation">Documentation</a> •
   <a href="#suggestion">Suggestions</a>
 </p>
 
