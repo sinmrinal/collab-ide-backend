@@ -97,7 +97,7 @@ def Cpp(code: str, inputString: str) -> str:
         return output
 
 
-def C(code: str, inputString: str):
+def C(code: str, inputString: str) -> str:
 
     inputfd, inputname, codefd, codename, outputfd, outputname = _createFiles('.c')
 
@@ -131,7 +131,7 @@ def C(code: str, inputString: str):
         os.remove('./a.out')
         return output
 
-def Dart(code: str, inputString: str):
+def Dart(code: str, inputString: str) -> str:
 
     inputfd, inputname, codefd, codename, outputfd, outputname = _createFiles('.dart')
 
@@ -157,7 +157,7 @@ def Dart(code: str, inputString: str):
         os.remove(outputname)
         return output
 
-def Golang(code: str, inputString: str):
+def Golang(code: str, inputString: str) -> str:
 
     inputfd, inputname, codefd, codename, outputfd, outputname = _createFiles('.go')
 

@@ -3,11 +3,11 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import status
 import json
-from . import run
+from . import execute
 
 
-@api_view(['POST'])
-def boilerPlate(request):
+@api_view(['GET'])
+def boilerPlate(request, language):
     '''
     Returns Boilerplate Code for requested language.
     Expected to recieve language request in format: {Language: Language Name}.
@@ -18,39 +18,43 @@ def boilerPlate(request):
     except:
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data={'details': 'Couldn\'t found boilerplate Codes'})
 
-    if 'language' in request.data:
-        if request.data['language'] in boilerPlateCode:
-            data = {'language': request.data['language'],
-                    'boilerPlate': boilerPlateCode[request.data['language']]}
-            return Response(status=status.HTTP_200_OK, data=data)
-        else:
-            return Response(status=status.HTTP_417_EXPECTATION_FAILED, data={'details': 'Language not supported.'})
+    if language in boilerPlateCode:
+        data = {'language': language,
+                'boilerPlate': boilerPlateCode[language]}
+        return Response(status=status.HTTP_200_OK, data=data)
     else:
-        return Response(status=status.HTTP_404_NOT_FOUND, data={'details': 'Didn\'t recieve any language in request.'})
+        return Response(status=status.HTTP_417_EXPECTATION_FAILED, data={'boilerPlate': 'Language not supported.'})
 
 
 @api_view(['POST'])
 def compile(request):
     '''
-    Expects a language, input and code to run.
+    Expects a language, input and code to execute.
     Responds with Output of the code.
     '''
     if 'language' not in request.data:
         output = 'Select a language!'
     else:
         if request.data['language'] == 'Python':
-            output = run.Python(code=request.data['code'], inputString=request.data['input'])
+            output = execute.Python(code=request.data['code'], inputString=request.data['input'])
         elif request.data['language'] == 'Java':
-            output = run.Java(code=request.data['code'], inputString=request.data['input'])
+            output = execute.Java(code=request.data['code'], inputString=request.data['input'])
         elif request.data['language'] == 'C++':
-            output = run.Cpp(code=request.data['code'], inputString=request.data['input'])
+            output = execute.Cpp(code=request.data['code'], inputString=request.data['input'])
         elif request.data['language'] == 'C':
-            output = run.C(code=request.data['code'], inputString=request.data['input'])
+            output = execute.C(code=request.data['code'], inputString=request.data['input'])
         elif request.data['language'] == 'Dart':
-            output = run.Dart(code=request.data['code'], inputString=request.data['input'])
+            output = execute.Dart(code=request.data['code'], inputString=request.data['input'])
         elif request.data['language'] == 'Golang':
-            output = run.Golang(code=request.data['code'], inputString=request.data['input'])
+            output = execute.Golang(code=request.data['code'], inputString=request.data['input'])
         else:
             output = request.data
     
     return Response(status=status.HTTP_200_OK, data={'output': output})
+
+
+async def websocket_view(socket):
+    await socket.accept()
+    while True:
+        message = await socket.receive_text()
+        await socket.send_text(message)
