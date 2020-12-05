@@ -15,11 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from wsserver.urls import websocket
-from api.views import websocket_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-    websocket('ws/codemirror-large/', websocket_view),
 ]

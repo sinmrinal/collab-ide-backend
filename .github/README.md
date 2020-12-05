@@ -100,7 +100,7 @@ $ python3 manage.py runserver
 | C                 |   ✔️   |
 | C++               |   ❌   |
 | Java              |   ✔️   |
-| Python            |   ✔️   |
+| python            |   ✔️   |
 | Go                |   ✔️   |
 | Dart              |   ✔️   |
 | Rust              |   ❌   |

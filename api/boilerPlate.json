@@ -1,16 +1,9 @@
 {
-    "Python": "print(\"Collab IDE\")\n",
-
-    "Java": "public class Java{\n public static void main(String[] args){\n \tSystem.out.println(\"Collab IDE\");\n\t}\n}\n",
-
-    "C": "#include<stdio.h> \n int main(){ \n \t printf(\"Collab IDE\"); \n }\n",
-
-    "C++": "#include<iostream> \n using namespace std; \n int main(){ \n \t cout<<\"Collab IDE\"; \n }\n",
-
-    "Dart": "void main() {\n\tprint(\"Collab IDE\");\n }\n",
-
-    "Rust": "fn main() {{\n\tprintln!(\"Collab IDE\")\n}}\n",
-
-    "Golang": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(\"Collab IDE\")\n}\n"
-    
+  "Python": "print(\"Collab IDE\")\n",
+  "Java": "public class Java{\n public static void main(String[] args){\n \tSystem.out.println(\"Collab IDE\");\n\t}\n}\n",
+  "C": "#include<stdio.h> \n int main(){ \n \t printf(\"Collab IDE\"); \n }\n",
+  "C++": "#include<iostream> \n using namespace std; \n int main(){ \n \t cout<<\"Collab IDE\"; \n }\n",
+  "Dart": "void main() {\n\tprint(\"Collab IDE\");\n }\n",
+  "Rust": "fn main() {{\n\tprintln!(\"Collab IDE\")\n}}\n",
+  "Golang": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(\"Collab IDE\")\n}\n"
 }
