@@ -1,6 +1,6 @@
 <h1 align="center">
-  <h1 align="center" > COLAB <b>IDE</b> </h1>
-    <h3 align="center">Backend for browser based collaborative code editor.</h3>
+  <h1 align="center" > COLLAB <b>IDE</b> </h1>
+    <h3 align="center">Backend for in-browser collaborative code editor.</h3>
 </h1>
 
 <p align="center">
@@ -23,7 +23,7 @@
 
 ## About
 
-A <a href="https://djangoproject.com">Django</a> based API backend for <a href="https://github.com/sinmrinal/collab-ide">COLAB **IDE**</a>.   
+A <a href="https://djangoproject.com">Django</a> based API backend for <a href="https://github.com/sinmrinal/collab-ide">COLAB-IDE</a>.   
 
 ## Local Development
 
@@ -31,7 +31,7 @@ A <a href="https://djangoproject.com">Django</a> based API backend for <a href="
 ### Step 1: Clone the repo
 
 ```bash
-https://github.com/sinmrinal/collab-ide-backend.git
+$ git clone https://github.com/sinmrinal/collab-ide-backend.git
 ```
 ### Step 2: **[OPTIONAL]** Create virtual enviroment
 
@@ -85,9 +85,9 @@ $ python3 manage.py runserver
 | -------------------------- | :------: |   :-------:   |
 | Boilerplate                |   Done   |     Stable    |
 | Compile Code               |   Done   |  Exprimental  |
-| Code WebSocket             |   WIP    |       -       |
+| Collaborate                |   Done   |  Exprimental  |
 | Chat WebSocket             |   TODO   |       -       |
-| CLI                        |   TODO   |       -       |
+| CLI                        |   WIP    |       -       |
 | Save Project on Server     |   TODO   |       -       |
 
 <br>
@@ -98,12 +98,12 @@ $ python3 manage.py runserver
 |     Language      | Support |
 | ----------------- | :-----: |
 | C                 |   ✔️   |
-| C++               |   ❌   |
+| C++               |   ✔️   |
 | Java              |   ✔️   |
 | python            |   ✔️   |
 | Go                |   ✔️   |
 | Dart              |   ✔️   |
-| Rust              |   ❌   |
+| Rust              |   ✔️   |
 
 <br>
 <br>
