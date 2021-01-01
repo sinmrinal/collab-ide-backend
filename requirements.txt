@@ -124,7 +124,7 @@ text-unidecode==1.2
 toml==0.10.1
 tornado==6.0.3
 traitlets==4.3.3
-Twisted==18.9.0
+Twisted==20.3.0
 ubuntu-advantage-tools==20.3
 ufw==0.36
 unattended-upgrades==0.1
