@@ -8,5 +8,5 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('createRoom/', views.create_room),
     path('joinRoom/', views.join_room),
-    path('check', views.check)
+    path('check/', views.check)
 ]

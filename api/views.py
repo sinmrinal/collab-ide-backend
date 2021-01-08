@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from . import execute
 from .models import RoomInfo
 
+TOKEN=""
 
 @api_view(['GET'])
 def boiler_plate(request, language: str) -> Response:
@@ -81,7 +82,7 @@ def create_room(request):
         return HttpResponseBadRequest(content='Unauthorised IP. Redirect not allowed.')
     else:
         data = request.data
-        if 'token' not in data or data['token'] != "":
+        if 'token' not in data or data['token'] != TOKEN:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         if 'roomName' and 'admin' in data:
             room_name = data['roomName']
@@ -110,7 +111,7 @@ def join_room(request) -> Response:
         return HttpResponseBadRequest(content='Unauthorised IP. Redirect not allowed.')
     else:
         data = request.data
-        if 'token' not in data or data['token'] != "":
+        if 'token' not in data or data['token'] != TOKEN:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         if 'roomID' and 'name' in data:
             room_id = data['roomID']

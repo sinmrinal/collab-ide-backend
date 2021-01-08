@@ -97,8 +97,20 @@ def cpp(code: str, input_string: str) -> str:
         os.close(temp)
         with os.fdopen(code_file_descriptor, 'w+') as fh:
             fh.write(code)
-        s = subprocess.check_output(f"g++ {code_file_name} -o a;./a", stdin=data, shell=True, timeout=15)
-        output = s.decode('utf-8')
+        
+        command = f'gcc {code_file_name} -lstdc++ > {output_file_name} 2>&1'
+        subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15)
+
+        with os.fdopen(output_file_descriptor, 'r+') as fh:
+            output = fh.read()
+
+        if len(output) > 20:
+            output = output[20:]
+        else:
+            command = f'./a.out < {input_file_name} > {output_file_name} 2>&1'
+            subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15)
+            with open(output_file_name, 'r+') as fh:
+                output = fh.read()
     except subprocess.TimeoutExpired:
         output = "TLE (15s)."
     except Exception as e:
@@ -108,7 +120,7 @@ def cpp(code: str, input_string: str) -> str:
         os.remove(input_file_name)
         os.remove(code_file_name)
         os.remove(output_file_name)
-        os.remove('./a')
+        # os.remove('./a')
         return output
 
 
@@ -129,7 +141,7 @@ def c(code: str, input_string: str) -> str:
         with os.fdopen(code_file_descriptor, 'w+') as fh:
             fh.write(code)
 
-        command = f'gcc {code_file_name} > {output_file_name}'
+        command = f'gcc {code_file_name} > {output_file_name} 2>&1'
         subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15)
 
         with os.fdopen(output_file_descriptor, 'r+') as fh:
