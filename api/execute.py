@@ -10,8 +10,10 @@ def _create_files(suffix: str) -> tuple:
     :rtype: tuple
     """
     input_file_descriptor, input_file_name = tempfile.mkstemp(dir='./api/temp')
-    code_file_descriptor, code_file_name = tempfile.mkstemp(dir='./api/temp', suffix=suffix)
-    output_file_descriptor, output_file_name = tempfile.mkstemp(dir='./api/temp')
+    code_file_descriptor, code_file_name = tempfile.mkstemp(
+        dir='./api/temp', suffix=suffix)
+    output_file_descriptor, output_file_name = tempfile.mkstemp(
+        dir='./api/temp')
     return input_file_descriptor, input_file_name, code_file_descriptor, code_file_name, output_file_descriptor, output_file_name
 
 
@@ -97,7 +99,7 @@ def cpp(code: str, input_string: str) -> str:
         os.close(temp)
         with os.fdopen(code_file_descriptor, 'w+') as fh:
             fh.write(code)
-        
+
         command = f'gcc {code_file_name} -lstdc++ > {output_file_name} 2>&1'
         subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15)
 
@@ -108,7 +110,8 @@ def cpp(code: str, input_string: str) -> str:
             output = output[20:]
         else:
             command = f'./a.out < {input_file_name} > {output_file_name} 2>&1'
-            subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15)
+            subprocess.run(command, stdout=subprocess.PIPE,
+                           shell=True, timeout=15)
             with open(output_file_name, 'r+') as fh:
                 output = fh.read()
     except subprocess.TimeoutExpired:
@@ -151,7 +154,8 @@ def c(code: str, input_string: str) -> str:
             output = output[20:]
         else:
             command = f'./a.out < {input_file_name} > {output_file_name} 2>&1'
-            subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15)
+            subprocess.run(command, stdout=subprocess.PIPE,
+                           shell=True, timeout=15)
             with open(output_file_name, 'r+') as fh:
                 output = fh.read()
 
@@ -265,7 +269,8 @@ def rust(code: str, input_string: str) -> str:
             pass
         else:
             command = f'./{code_file_name[:-3].rsplit("/", 1)[-1]} < {input_file_name} > {output_file_name} 2>&1'
-            subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15)
+            subprocess.run(command, stdout=subprocess.PIPE,
+                           shell=True, timeout=15)
             with open(output_file_name, 'r+') as fh:
                 output = fh.read()
 

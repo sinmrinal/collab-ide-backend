@@ -10,7 +10,8 @@ from rest_framework.response import Response
 from . import execute
 from .models import RoomInfo
 
-TOKEN=""
+TOKEN = ""
+
 
 @api_view(['GET'])
 def boiler_plate(request, language: str) -> Response:
@@ -36,7 +37,7 @@ def boiler_plate(request, language: str) -> Response:
         return Response(status=status.HTTP_417_EXPECTATION_FAILED, data={'boilerPlate': 'Language not supported.'})
 
 
-@api_view(['GET','POST'])
+@api_view(['GET', 'POST'])
 def compile_code(request) -> Response:
     """
     Expects a language, input and code to execute.
@@ -51,26 +52,33 @@ def compile_code(request) -> Response:
             output = 'Select a language!'
         else:
             if request.data['language'] == 'Python':
-                output = execute.python(code=request.data['code'], input_string=request.data['input'])
+                output = execute.python(
+                    code=request.data['code'], input_string=request.data['input'])
             elif request.data['language'] == 'Java':
-                output = execute.java(code=request.data['code'], input_string=request.data['input'])
+                output = execute.java(
+                    code=request.data['code'], input_string=request.data['input'])
             elif request.data['language'] == 'CPP':
-                output = execute.cpp(code=request.data['code'], input_string=request.data['input'])
+                output = execute.cpp(
+                    code=request.data['code'], input_string=request.data['input'])
             elif request.data['language'] == 'C':
-                output = execute.c(code=request.data['code'], input_string=request.data['input'])
+                output = execute.c(
+                    code=request.data['code'], input_string=request.data['input'])
             elif request.data['language'] == 'Dart':
-                output = execute.dart(code=request.data['code'], input_string=request.data['input'])
+                output = execute.dart(
+                    code=request.data['code'], input_string=request.data['input'])
             elif request.data['language'] == 'Go':
-                output = execute.golang(code=request.data['code'], input_string=request.data['input'])
+                output = execute.golang(
+                    code=request.data['code'], input_string=request.data['input'])
             elif request.data['language'] == 'Rust':
-                output = execute.rust(code=request.data['code'], input_string=request.data['input'])
+                output = execute.rust(
+                    code=request.data['code'], input_string=request.data['input'])
             else:
                 output = "Select a language first."
 
         return Response(status=status.HTTP_200_OK, data={'output': output})
 
 
-@api_view(['GET','POST'])
+@api_view(['GET', 'POST'])
 def create_room(request):
     """
     Creates new room with given name and creator name.
@@ -93,13 +101,14 @@ def create_room(request):
             room.created_by = admin
             room.joined_by = admin
             room.save()
-            response = {'ID': room.ID, 'name': room.name, 'created_by': room.created_by}
+            response = {'ID': room.ID, 'name': room.name,
+                        'created_by': room.created_by}
             return Response(status=status.HTTP_201_CREATED, data=response)
         else:
             return Response(status=status.HTTP_417_EXPECTATION_FAILED, data=data)
 
 
-@api_view(['GET','POST'])
+@api_view(['GET', 'POST'])
 def join_room(request) -> Response:
     """
     Checks if room is available with given ID.
@@ -128,6 +137,7 @@ def join_room(request) -> Response:
                 return Response(status=status.HTTP_204_NO_CONTENT, data={"error": "Room of this is is not available."})
         else:
             return Response(status=status.HTTP_417_EXPECTATION_FAILED, data=data)
+
 
 @api_view()
 def check(request):
