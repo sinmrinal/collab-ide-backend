@@ -28,10 +28,10 @@ A <a href="https://djangoproject.com">Django</a> based API backend for <a href="
 ## Local Development
 
 ##### Developing or running locally steps:
-### Step 1: Clone the repo
+### Step 1: Clone the repo and get inside the repo
 
 ```bash
-$ git clone https://github.com/sinmrinal/collab-ide-backend.git
+$ git clone https://github.com/sinmrinal/collab-ide-backend.git && cd collab-ide-backend
 ```
 ### Step 2: **[OPTIONAL]** Create virtual enviroment
 
@@ -70,6 +70,8 @@ $ pip install -r requirements.txt
 Now you can run the application by :
 
 ```bash
+# Set TOKEN
+$ export TOKEN="add your token here without quotes."
 
 # Run the project
 $ python3 manage.py runserver
@@ -78,13 +80,34 @@ $ python3 manage.py runserver
 
 ```
 
+### OR Using Docker
+
+#### Step 1: Clone the repo and get inside the repo
+
+```bash
+$ git clone https://github.com/sinmrinal/collab-ide-backend.git && cd collab-ide-backend
+```
+
+### Step 2: Build the image
+
+```bash
+$ docker build -t collab-backend-image .
+```
+
+### Step 3: Run container/app
+
+```bash
+$ docker run -d --name collab-backend -p 8000:8080 collab-backend-image
+```
+
+
 
 ## Features
 
 |       Feature              |  Status  |   Stability   |
 | -------------------------- | :------: |   :-------:   |
-| Boilerplate                |   Done   |     Stable    |
-| Compile Code               |   Done   |  Exprimental  |
+| <s>Boilerplate</s> ~Depricated~ |   Done   |     Stable    |
+| Compile Code               |   Done   |  Stable  |
 | Collaborate                |   Done   |  Exprimental  |
 | Chat WebSocket             |   TODO   |       -       |
 | CLI                        |   WIP    |       -       |
@@ -102,7 +125,7 @@ $ python3 manage.py runserver
 | Java              |   ✔️   |
 | python            |   ✔️   |
 | Go                |   ✔️   |
-| Dart              |   ✔️   |
+| <s>Dart</s> ~Depricated~             |   ✔️   |
 | Rust              |   ✔️   |
 
 <br>
@@ -112,10 +135,11 @@ $ python3 manage.py runserver
 
 |       Request              | Protocal |   Type  |             Payload             |         Response         |
 | :------------------------: | :------: | :-----: |   :-------------------------:   | :----------------------: |
-| Boilerplate Code           |   HTTPS  |   GET   |                  -              |    ```boilerplate```     |
-| Compile Code               |   HTTPS  |   POST  |  ```{language, code, input}```  | ```{language, output}``` |
-| Code WebSocket             |    WSS   |   -     |                  -              |            -             |
-| Code WebSocket             |    WSS   |   -     |                  -              |            -             |
+|<s>Boilerplate Code </s> ~Depricated~ |   HTTP  |   GET   |                  -              |    ```boilerplate```     |
+| Compile Code               |   HTTP  |   POST  |  ```{language, code, input}```  | ```{language, output}``` |
+| Create Room               |   HTTP  |   POST  |  ```{roomName, adminName, token}```  | ```{roomID, roomName, createdBy, createdOn}``` |
+| Join Room               |   HTTP  |   POST  |  ```{roomID, userName, token}```  | ```{roomID, roomName, createdBy, createdOn, joinedBy}``` |
+
 
 ## Suggestion
 

@@ -9,7 +9,7 @@ def _create_files(suffix: str) -> tuple:
     :return: Input, Code and Output File Name and Descriptor
     :rtype: tuple
     """
-    input_file_descriptor, input_file_name = tempfile.mkstemp(dir='./api/temp')
+    input_file_descriptor, input_file_name = tempfile.mkstemp(dir='./api/tempFileDump')
     code_file_descriptor, code_file_name = tempfile.mkstemp(
         dir='./api/temp', suffix=suffix)
     output_file_descriptor, output_file_name = tempfile.mkstemp(
@@ -94,9 +94,8 @@ def cpp(code: str, input_string: str) -> str:
         '.cpp')
     output = ""
     try:
-        data, temp = os.pipe()
-        os.write(temp, bytes(f"{input_string}\n", "utf-8"))
-        os.close(temp)
+        with os.fdopen(input_file_descriptor, 'w+') as fh:
+            fh.write(input_string)
         with os.fdopen(code_file_descriptor, 'w+') as fh:
             fh.write(code)
 
@@ -114,6 +113,7 @@ def cpp(code: str, input_string: str) -> str:
                            shell=True, timeout=15)
             with open(output_file_name, 'r+') as fh:
                 output = fh.read()
+            os.remove('./a.out')
     except subprocess.TimeoutExpired:
         output = "TLE (15s)."
     except Exception as e:
@@ -123,7 +123,7 @@ def cpp(code: str, input_string: str) -> str:
         os.remove(input_file_name)
         os.remove(code_file_name)
         os.remove(output_file_name)
-        # os.remove('./a')
+        os.remove('./a.out')
         return output
 
 
@@ -158,6 +158,7 @@ def c(code: str, input_string: str) -> str:
                            shell=True, timeout=15)
             with open(output_file_name, 'r+') as fh:
                 output = fh.read()
+            os.remove('./a.out')
 
     except subprocess.TimeoutExpired:
         output = "TLE (15s)."
@@ -168,7 +169,6 @@ def c(code: str, input_string: str) -> str:
         os.remove(input_file_name)
         os.remove(code_file_name)
         os.remove(output_file_name)
-        os.remove('./a.out')
         return output
 
 

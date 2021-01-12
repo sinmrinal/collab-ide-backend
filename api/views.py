@@ -1,4 +1,4 @@
-import json
+import json, os
 from uuid import uuid4
 from django.http.response import HttpResponseBadRequest
 from django.shortcuts import redirect
@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from . import execute
 from .models import RoomInfo
 
-TOKEN = ""
+TOKEN = os.environ.get('TOKEN')
 
 
 @api_view(['GET'])

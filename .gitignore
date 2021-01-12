@@ -1,3 +1,4 @@
 /.idea
-.env
 /api/__pycache__
+/collab_ide_backend/__pycache__
+/venv
