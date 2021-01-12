@@ -10,17 +10,13 @@ RUN apk add python3
 
 RUN apk add py3-pip
 
-RUN apk add openjdk8-jre
+RUN apk add openjdk11
 
 RUN apk add go
 
 RUN apk add rust
 
 COPY . .
-
-ARG token
-
-ENV TOKEN=$token
 
 RUN pip install -r requirements.txt
 

@@ -3,6 +3,7 @@ import subprocess
 import tempfile
 
 
+
 def _create_files(suffix: str) -> tuple:
     """
     :param suffix: string
@@ -11,9 +12,9 @@ def _create_files(suffix: str) -> tuple:
     """
     input_file_descriptor, input_file_name = tempfile.mkstemp(dir='./api/tempFileDump')
     code_file_descriptor, code_file_name = tempfile.mkstemp(
-        dir='./api/temp', suffix=suffix)
+        dir='./api/tempFileDump', suffix=suffix)
     output_file_descriptor, output_file_name = tempfile.mkstemp(
-        dir='./api/temp')
+        dir='./api/tempFileDump')
     return input_file_descriptor, input_file_name, code_file_descriptor, code_file_name, output_file_descriptor, output_file_name
 
 
@@ -123,7 +124,6 @@ def cpp(code: str, input_string: str) -> str:
         os.remove(input_file_name)
         os.remove(code_file_name)
         os.remove(output_file_name)
-        os.remove('./a.out')
         return output
 
 
