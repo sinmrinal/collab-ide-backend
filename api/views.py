@@ -128,8 +128,7 @@ def join_room(request) -> Response:
                         'joined_by': list(users.split(","))}
             return Response(status=status.HTTP_200_OK, data=response)
         return Response(status=status.HTTP_204_NO_CONTENT, data={"error": "Room of this is is not available."})
-    else:
-        return Response(status=status.HTTP_417_EXPECTATION_FAILED, data=data)
+    return Response(status=status.HTTP_417_EXPECTATION_FAILED, data=data)
 
 
 @api_view()
