@@ -35,7 +35,7 @@ def python(code: str, input_string: str) -> str:
             fh.write(code)
 
         command = f'cat {input_file_name} | python3 {code_file_name} > {output_file_name} 2>&1'
-        subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15)
+        subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15, check=True)
 
         with os.fdopen(output_file_descriptor, 'r+') as fh:
             output = fh.read()
@@ -68,7 +68,7 @@ def java(code: str, input_string: str) -> str:
             fh.write(code)
 
         command = f'cat {input_file_name} | java {code_file_name} > {output_file_name} 2>&1'
-        subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15)
+        subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15, check=True)
 
         with os.fdopen(output_file_descriptor, 'r+') as fh:
             output = fh.read()
@@ -101,7 +101,7 @@ def cpp(code: str, input_string: str) -> str:
             fh.write(code)
 
         command = f'gcc {code_file_name} -lstdc++ > {output_file_name} 2>&1'
-        subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15)
+        subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15, check=True)
 
         with os.fdopen(output_file_descriptor, 'r+') as fh:
             output = fh.read()
@@ -111,7 +111,7 @@ def cpp(code: str, input_string: str) -> str:
         else:
             command = f'./a.out < {input_file_name} > {output_file_name} 2>&1'
             subprocess.run(command, stdout=subprocess.PIPE,
-                           shell=True, timeout=15)
+                           shell=True, timeout=15, check=True)
             with open(output_file_name, 'r+') as fh:
                 output = fh.read()
             os.remove('./a.out')
@@ -145,7 +145,7 @@ def c(code: str, input_string: str) -> str:
             fh.write(code)
 
         command = f'gcc {code_file_name} > {output_file_name} 2>&1'
-        subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15)
+        subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15, check=True)
 
         with os.fdopen(output_file_descriptor, 'r+') as fh:
             output = fh.read()
@@ -155,7 +155,7 @@ def c(code: str, input_string: str) -> str:
         else:
             command = f'./a.out < {input_file_name} > {output_file_name} 2>&1'
             subprocess.run(command, stdout=subprocess.PIPE,
-                           shell=True, timeout=15)
+                           shell=True, timeout=15, check=True)
             with open(output_file_name, 'r+') as fh:
                 output = fh.read()
             os.remove('./a.out')
@@ -190,7 +190,7 @@ def dart(code: str, input_string: str) -> str:
             fh.write(code)
 
         command = f'cat {input_file_name} | dart {code_file_name} > {output_file_name} 2>&1'
-        subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15)
+        subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15, check=True)
 
         with os.fdopen(output_file_descriptor, 'r+') as fh:
             output = fh.read()
@@ -225,7 +225,7 @@ def golang(code: str, input_string: str) -> str:
             fh.write(code)
 
         command = f'cat {input_file_name} | go run {code_file_name} > {output_file_name} 2>&1'
-        subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15)
+        subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15, check=True)
 
         with os.fdopen(output_file_descriptor, 'r+') as fh:
             output = fh.read()
@@ -260,7 +260,7 @@ def rust(code: str, input_string: str) -> str:
             fh.write(code)
 
         command = f'rustc {code_file_name} > {output_file_name}'
-        subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15)
+        subprocess.run(command, stdout=subprocess.PIPE, shell=True, timeout=15, check=True)
 
         with os.fdopen(output_file_descriptor, 'r+') as fh:
             output = fh.read()
@@ -270,7 +270,7 @@ def rust(code: str, input_string: str) -> str:
         else:
             command = f'./{code_file_name[:-3].rsplit("/", 1)[-1]} < {input_file_name} > {output_file_name} 2>&1'
             subprocess.run(command, stdout=subprocess.PIPE,
-                           shell=True, timeout=15)
+                           shell=True, timeout=15, check=True)
             with open(output_file_name, 'r+') as fh:
                 output = fh.read()
 
