@@ -1,7 +1,6 @@
 import json, os
 from uuid import uuid4
 from django.http.response import HttpResponseBadRequest
-from django.shortcuts import redirect
 
 from rest_framework import status
 from rest_framework.decorators import api_view
