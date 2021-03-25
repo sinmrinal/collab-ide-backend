@@ -131,7 +131,7 @@ def join_room(request) -> Response:
                 users = str(room_detail.joined_by) + f",{name}"
                 RoomInfo.objects.filter(ID=room_id).update(joined_by=users)
                 response = {'ID': room_detail.ID, 'name': room_detail.name, 'created_by': room_detail.created_by,
-                            'joined_by': [i for i in users.split(",")]}
+                            'joined_by': list(users.split(","))}
                 return Response(status=status.HTTP_200_OK, data=response)
             else:
                 return Response(status=status.HTTP_204_NO_CONTENT, data={"error": "Room of this is is not available."})
