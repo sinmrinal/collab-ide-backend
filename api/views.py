@@ -1,4 +1,5 @@
-import json, os
+import json
+import os
 from uuid import uuid4
 from django.http.response import HttpResponseBadRequest
 
